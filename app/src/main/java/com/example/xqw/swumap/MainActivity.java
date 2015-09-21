@@ -1,9 +1,16 @@
 package com.example.xqw.swumap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.DialogPreference;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -12,23 +19,32 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
 
 public class MainActivity extends Activity {
     MapView mMapView;                                        //创建地图容器
-    BaiduMap baiduMap;                                         //创建百度地图实例
+    BaiduMap baiduMap;                                      //创建百度地图实例
     public LocationClient mLocationClient;
     public MyLocationListenner myListener = new MyLocationListenner();//创建定位监听器
     private MyLocationConfiguration.LocationMode mCurrentMode;//创建当前定位模式
     BitmapDescriptor mCurrentMarker=null;
     ImageButton requestLocButton;
     boolean isFirstLoc = true;// 是否首次定位
+    FloatingActionsMenu menuMultipleActions;
     //FloatingActionButton floatingActionButton;
+    //RadioGroup chooseMap=(RadioGroup)findViewById(R.id.choose_map);
+    //DialogPlus dialogPlus=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +86,7 @@ public class MainActivity extends Activity {
         requestLocButton.setOnClickListener(btnClickListener);
 
         mMapView = (MapView) findViewById(R.id.bmapView);
+        mMapView.showZoomControls(false);
         baiduMap = mMapView.getMap();
         baiduMap.setMyLocationEnabled(true);
         mLocationClient = new LocationClient(getApplicationContext());//声明LocationClient类
@@ -84,7 +101,47 @@ public class MainActivity extends Activity {
         mLocationClient.start();
         //setMyLocationConfigeration方法放在最后，因为其中所需参数需要预先实例化
         baiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
-        //floatingActionButton=(FloatingActionButton)findViewById(R.id.fab);
+        menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        FloatingActionButton switchAction=(FloatingActionButton)findViewById(R.id.action_switch);
+        switchAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogPlus dialogPlus=DialogPlus.newDialog(MainActivity.this).setContentHolder(new ViewHolder(R.layout.radiogroup))
+                        .setGravity(Gravity.CENTER).setCancelable(true).setInAnimation(com.orhanobut.dialogplus.R.anim.fade_in_center)
+                        .setOutAnimation(com.orhanobut.dialogplus.R.anim.fade_out_center).create();
+                dialogPlus.show();
+                RadioGroup chooseMap=(RadioGroup)dialogPlus.getHolderView();
+                chooseMap.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        MapStatus ms=null;
+                        MapStatusUpdate u=null;
+                        switch (group.getCheckedRadioButtonId()){
+                            case R.id.map_plain:
+                                baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+                                ms = new MapStatus.Builder(baiduMap.getMapStatus()).overlook(0).build();
+                                u = MapStatusUpdateFactory.newMapStatus(ms);
+                                baiduMap.animateMapStatus(u);
+                                break;
+                            case R.id.map_3d:
+                                ms = new MapStatus.Builder(baiduMap.getMapStatus()).overlook(-45).build();
+                                u = MapStatusUpdateFactory.newMapStatus(ms);
+                                baiduMap.animateMapStatus(u);
+                                break;
+                            case R.id.map_sat:
+                                baiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                menuMultipleActions.collapseImmediately();
+            }
+
+
+    });
+
     }
 
     @Override
@@ -110,6 +167,15 @@ public class MainActivity extends Activity {
         super.onPause();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if(menuMultipleActions.isExpanded()){
+            menuMultipleActions.collapse();
+        }else
+        super.onBackPressed();
+    }
+
     public class MyLocationListenner implements BDLocationListener {
         //创建MyLocationListenner类实现BDLocationListener接口，处理回调数据
         @Override

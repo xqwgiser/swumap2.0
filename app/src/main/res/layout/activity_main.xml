@@ -46,20 +46,34 @@
         android:layout_marginEnd="16dp">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_a"
+            android:id="@+id/action_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="#fafafa"
-            fab:fab_title="Action A"
-            fab:fab_colorPressed="#f1f1f1"/>
+            fab:fab_colorPressed="#f1f1f1"
+            android:src="@mipmap/main_icon_maplayers"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_b"
+            android:id="@+id/action_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="#fafafa"
-            fab:fab_title="Action with a very long name that won\'t fit on the screen"
-            fab:fab_colorPressed="#f1f1f1"/>
+            fab:fab_colorPressed="#f1f1f1"
+            android:src="@mipmap/main_icon_route"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_nearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="#fafafa"
+            fab:fab_colorPressed="#f1f1f1"
+            android:src="@mipmap/main_icon_nearby"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="#fafafa"
+            fab:fab_colorPressed="#f1f1f1"
+            android:src="@mipmap/main_icon_mine"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
