@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3f51b5">
+    <LinearLayout
+        android:id="@+id/title"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/back_white_arrow_normal"
+            android:background="@drawable/btn_back" />
+        <RadioGroup
+            android:id="@+id/switch_btns"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal">
+                <RadioButton
+                    android:id="@+id/btn_bus"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bus"
+                    android:layout_toLeftOf="@+id/btn_drive"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:button="@null"
+                    android:checked="false" />
+                <RadioButton
+                    android:id="@+id/btn_drive"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/drive"
+                    android:layout_centerInParent="true"
+                    android:button="@null"
+                    android:checked="false" />
+                <RadioButton
+                    android:id="@+id/btn_walk"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/walk"
+                    android:layout_toRightOf="@+id/btn_drive"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40dp"
+                    android:button="@null"
+                    android:checked="false" />
+        </RadioGroup>
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="搜索"
+            android:textColor="#c5cae9"
+            android:background="@drawable/btn_back"/>
+    </LinearLayout>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="我的位置"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="20dp"
+            app:met_textColor="#ffffff"
+            app:met_textColorHint="#c5cae9"
+            app:met_underlineColor="#536dfe">
+
+            <requestFocus />
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="输入终点"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="20dp"
+            app:met_textColor="#ffffff"
+            app:met_textColorHint="#c5cae9"
+            app:met_underlineColor="#536dfe">
+
+            <requestFocus />
+        </com.rengwuxian.materialedittext.MaterialEditText>
+    </LinearLayout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginBottom="10dip" >
+
+            <Button
+                android:id="@+id/pre"
+                android:layout_width="45dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/pre_"
+                />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="45dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/next_"
+                 />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

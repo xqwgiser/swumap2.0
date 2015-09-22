@@ -45,13 +45,16 @@
             android:value="hzFGd4z5t6L1BwToXrpHLjFQ" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".OtherActivity"
+            android:launchMode="singleTask"/>
         <service android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote">

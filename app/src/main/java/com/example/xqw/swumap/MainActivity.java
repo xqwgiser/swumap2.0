@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.view.Gravity;
@@ -141,6 +142,15 @@ public class MainActivity extends Activity {
 
 
     });
+        FloatingActionButton routePlanBtn=(FloatingActionButton)findViewById(R.id.action_search);
+        routePlanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,OtherActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
