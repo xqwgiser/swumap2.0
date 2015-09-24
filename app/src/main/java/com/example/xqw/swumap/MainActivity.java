@@ -40,12 +40,10 @@ public class MainActivity extends Activity {
     public MyLocationListenner myListener = new MyLocationListenner();//创建定位监听器
     private MyLocationConfiguration.LocationMode mCurrentMode;//创建当前定位模式
     BitmapDescriptor mCurrentMarker=null;
-    ImageButton requestLocButton;
+    ImageButton requestLocButton;//定位按钮
     boolean isFirstLoc = true;// 是否首次定位
-    FloatingActionsMenu menuMultipleActions;
-    //FloatingActionButton floatingActionButton;
-    //RadioGroup chooseMap=(RadioGroup)findViewById(R.id.choose_map);
-    //DialogPlus dialogPlus=null;
+    FloatingActionsMenu menuMultipleActions;//悬浮菜单
+    BDLocation myLocation=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +83,7 @@ public class MainActivity extends Activity {
             }
         };
         requestLocButton.setOnClickListener(btnClickListener);
-
+        //初始化地图组件
         mMapView = (MapView) findViewById(R.id.bmapView);
         mMapView.showZoomControls(false);
         baiduMap = mMapView.getMap();
@@ -102,7 +100,9 @@ public class MainActivity extends Activity {
         mLocationClient.start();
         //setMyLocationConfigeration方法放在最后，因为其中所需参数需要预先实例化
         baiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
+        //悬浮菜单操作及其内部组件选择对话框的操作，可重构
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        //悬浮按钮之切换图层按钮操作
         FloatingActionButton switchAction=(FloatingActionButton)findViewById(R.id.action_switch);
         switchAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,11 +142,13 @@ public class MainActivity extends Activity {
 
 
     });
+        //悬浮按钮之路线查找功能，在此将其余需要新界面的功能统一置于OtherActivity类中，以fragment方式实现
         FloatingActionButton routePlanBtn=(FloatingActionButton)findViewById(R.id.action_search);
         routePlanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,OtherActivity.class);
+                intent.putExtra("location_data",myLocation);
                 startActivity(intent);
 
             }
@@ -206,6 +208,7 @@ public class MainActivity extends Activity {
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
                 baiduMap.animateMapStatus(u);
             }
+            myLocation=location;
         }
 
         public void onReceivePoi(BDLocation poiLocation) {

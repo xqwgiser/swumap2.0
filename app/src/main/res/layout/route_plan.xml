@@ -31,34 +31,37 @@
                 <RadioButton
                     android:id="@+id/btn_bus"
                     android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/bus"
                     android:layout_toLeftOf="@+id/btn_drive"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="40dp"
                     android:button="@null"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:clickable="true" />
                 <RadioButton
                     android:id="@+id/btn_drive"
                     android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/drive"
                     android:layout_centerInParent="true"
                     android:button="@null"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:clickable="true" />
                 <RadioButton
                     android:id="@+id/btn_walk"
                     android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/walk"
                     android:layout_toRightOf="@+id/btn_drive"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40dp"
                     android:button="@null"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:clickable="true" />
         </RadioGroup>
         <Button
             android:id="@+id/confirm"
@@ -66,7 +69,7 @@
             android:layout_height="40dp"
             android:text="搜索"
             android:textColor="#c5cae9"
-            android:background="@drawable/btn_back"/>
+            android:background="@drawable/btn_back" />
     </LinearLayout>
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/start"
@@ -78,7 +81,9 @@
             android:layout_marginRight="20dp"
             app:met_textColor="#ffffff"
             app:met_textColorHint="#c5cae9"
-            app:met_underlineColor="#536dfe">
+            app:met_underlineColor="#536dfe"
+            app:met_floatingLabelText="仅限重庆市内"
+            app:met_floatingLabel="highlight">
 
             <requestFocus />
         </com.rengwuxian.materialedittext.MaterialEditText>
@@ -92,7 +97,9 @@
             android:layout_marginRight="20dp"
             app:met_textColor="#ffffff"
             app:met_textColorHint="#c5cae9"
-            app:met_underlineColor="#536dfe">
+            app:met_underlineColor="#536dfe"
+            app:met_floatingLabelText="仅限重庆市内"
+            app:met_floatingLabel="highlight">
 
             <requestFocus />
         </com.rengwuxian.materialedittext.MaterialEditText>
@@ -124,7 +131,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:layout_weight="1.0"
-                android:background="@drawable/pre_"
+                android:background="@drawable/pre"
                 />
 
             <Button
@@ -134,8 +141,8 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:layout_weight="1.0"
-                android:background="@drawable/next_"
-                 />
+                android:background="@drawable/next"
+                />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
