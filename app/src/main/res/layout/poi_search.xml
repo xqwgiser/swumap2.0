@@ -12,7 +12,8 @@
             android:id="@+id/title"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
             <ImageButton
                 android:id="@+id/back"
                 android:layout_width="40dp"
@@ -22,7 +23,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"/>
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/start"
+                android:id="@+id/ads_poi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -32,10 +33,14 @@
                 app:met_textColor="#ffffff"
                 app:met_textColorHint="#c5cae9"
                 app:met_underlineColor="#536dfe"
-                app:met_floatingLabel="highlight"/>
+                app:met_floatingLabelText="仅限重庆市内"
+                app:met_floatingLabel="highlight"
+                app:met_helperText="餐厅，银行，超市，影院..."
+                app:met_bottomTextSize="14sp"
+                />
 
             <Button
-                android:id="@+id/confirm"
+                android:id="@+id/search"
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:text="搜索"
@@ -45,36 +50,186 @@
                 android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
-        <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.sothree.slidinguppanel.SlidingUpPanelLayout
+            xmlns:sothree="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/sliding_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:id="@+id/bank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bank"
-                />
-            <ImageButton
-                android:id="@+id/dinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/dinner"
-                android:layout_toRightOf="@+id/bank"
-                />
-            <ImageButton
-                android:id="@+id/mall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/mall"
-                android:layout_toRightOf="@+id/dinner"
-                />
-            <ImageButton
-                android:id="@+id/cinema"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/cinema"
-                android:layout_toRightOf="@+id/mall"
-                />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            sothree:umanoPanelHeight="68dp"
+            sothree:umanoShadowHeight="4dp">
+
+            <com.baidu.mapapi.map.MapView
+                android:id="@+id/map"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:clickable="true" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+                <ImageView
+                    android:id="@+id/up_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_card_up"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"/>
+                <TextView
+                    android:id="@+id/POI_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击目标获取详细信息"
+                    android:textSize="16sp"
+                    android:layout_below="@+id/up_image"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="20dp"/>
+                <View
+                    android:id="@+id/divider_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/background"
+                    android:layout_below="@+id/POI_title"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+                <ImageView
+                    android:id="@+id/POI_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_poilist_near"
+                    android:layout_below="@+id/divider_1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/POI_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider_1"
+                    android:layout_toRightOf="@id/POI_img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="POI地址"/>
+                <View
+                    android:id="@+id/divider_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/background"
+                    android:layout_below="@+id/POI_img"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+                <ImageView
+                    android:id="@+id/POI_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_poidetail_tel"
+                    android:layout_below="@+id/divider_2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/POI_phonenumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider_2"
+                    android:layout_toRightOf="@id/POI_phone"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="POI电话"/>
+                <View
+                    android:id="@+id/divider_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/background"
+                    android:layout_below="@+id/POI_phone"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+                <ImageView
+                    android:id="@+id/POI_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_poidetail_scenry_book"
+                    android:layout_below="@+id/divider_3"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/POI_ratingnumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider_3"
+                    android:layout_toRightOf="@id/POI_rating"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="POI综合评价"/>
+                <View
+                    android:id="@+id/divider_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/background"
+                    android:layout_below="@+id/POI_ratingnumber"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+                <ImageView
+                    android:id="@+id/POI_tagimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_poidetail_bar_comment"
+                    android:layout_below="@+id/divider_4"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/POI_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider_4"
+                    android:layout_toRightOf="@id/POI_tagimg"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="POI标签"/>
+                <View
+                    android:id="@+id/divider_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/background"
+                    android:layout_below="@+id/POI_tag"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+                <ImageView
+                    android:id="@+id/POI_timeimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_poilist_bookbtn_bg"
+                    android:layout_below="@+id/divider_5"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/POI_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider_5"
+                    android:layout_toRightOf="@id/POI_timeimg"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="POI营业时间"/>
+            </RelativeLayout>
+        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    </RelativeLayout>
 
 </LinearLayout>

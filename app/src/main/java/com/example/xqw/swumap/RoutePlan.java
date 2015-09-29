@@ -1,12 +1,14 @@
 package com.example.xqw.swumap;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,6 +22,7 @@ import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -65,6 +68,8 @@ public class RoutePlan extends Fragment implements View.OnClickListener,RadioGro
     private TextView popupText = null;//提示view
     MapView mMapView = null;    // 地图View
     BaiduMap mBaidumap = null;
+    MapStatus ms=null;
+    MapStatusUpdate u=null;
     //搜索相关
     RoutePlanSearch mSearch = null;
     BDLocation myLocation;
@@ -86,6 +91,9 @@ public class RoutePlan extends Fragment implements View.OnClickListener,RadioGro
         mMapView = (MapView) view.findViewById(R.id.map);
         mMapView.showZoomControls(false);
         mBaidumap = mMapView.getMap();
+        ms=new MapStatus.Builder(mBaidumap.getMapStatus()).zoom(17).build();
+        u = MapStatusUpdateFactory.newMapStatus(ms);
+        mBaidumap.animateMapStatus(u);
         mBaidumap.setMyLocationEnabled(true);
         mBtnPre = (Button) view.findViewById(R.id.pre);
         mBtnNext = (Button) view.findViewById(R.id.next);
@@ -102,6 +110,9 @@ public class RoutePlan extends Fragment implements View.OnClickListener,RadioGro
                 startActivity(intent);
                 break;
             case R.id.confirm:
+                InputMethodManager inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
                 route = null;
                 mBtnPre.setVisibility(View.INVISIBLE);
                 mBtnNext.setVisibility(View.INVISIBLE);

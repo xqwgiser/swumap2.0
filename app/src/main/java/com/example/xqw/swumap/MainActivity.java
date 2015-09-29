@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
     boolean isFirstLoc = true;// 是否首次定位
     FloatingActionsMenu menuMultipleActions;//悬浮菜单
     BDLocation myLocation=null;
+    MapStatus ms=null;
+    MapStatusUpdate u=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,9 @@ public class MainActivity extends Activity {
         mMapView.showZoomControls(false);
         baiduMap = mMapView.getMap();
         baiduMap.setMyLocationEnabled(true);
+        ms=new MapStatus.Builder(baiduMap.getMapStatus()).zoom(17).build();
+        u = MapStatusUpdateFactory.newMapStatus(ms);
+        baiduMap.animateMapStatus(u);
         mLocationClient = new LocationClient(getApplicationContext());//声明LocationClient类
         mLocationClient.registerLocationListener(myListener);  //注册LocationClient的监听事件
         LocationClientOption option = new LocationClientOption();//创建定位配置
@@ -115,8 +120,7 @@ public class MainActivity extends Activity {
                 chooseMap.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        MapStatus ms=null;
-                        MapStatusUpdate u=null;
+
                         switch (group.getCheckedRadioButtonId()){
                             case R.id.map_plain:
                                 baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
@@ -149,11 +153,21 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,OtherActivity.class);
                 intent.putExtra("location_data",myLocation);
+                intent.putExtra("fragment_tag",OtherActivity.ROUT_PLAN);
                 startActivity(intent);
 
             }
         });
-
+        FloatingActionButton POISearch=(FloatingActionButton)findViewById(R.id.action_nearby);
+        POISearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,OtherActivity.class);
+                intent.putExtra("location_data",myLocation);
+                intent.putExtra("fragment_tag",OtherActivity.POI_SEARCH);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
