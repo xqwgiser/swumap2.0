@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F3F6">
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#3f51b5">
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/back_white_arrow_normal"
+            android:background="@drawable/btn_back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:text="设 置"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+    <LinearLayout style="@style/wrap_layout">
+        <LinearLayout
+            style="@style/single_layout"
+            android:id="@+id/screen_light">
+            <TextView
+                style="@style/usertext"
+                android:text="屏幕常亮"/>
+           <Switch
+               android:id="@+id/screen_light_btn"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/wrap_layout" >
+        <LinearLayout
+            style="@style/top_layout"
+            android:id="@+id/romate">
+        <TextView
+            style="@style/usertext"
+            android:text="旋转手势开关" />
+            <Switch
+                android:id="@+id/romate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+        <LinearLayout
+            style="@style/mid_layout"
+            android:id="@+id/overlook">
+            <TextView
+                style="@style/usertext"
+                android:text="切换视角开关" />
+            <Switch
+                android:id="@+id/overlook_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+        <LinearLayout
+            style="@style/bottom_layout"
+            android:id="@+id/heat_map">
+            <TextView
+                style="@style/usertext"
+                android:text="热力图" />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+        <LinearLayout
+            android:id="@+id/position_remind"
+            style="@style/bottom_layout">
+            <TextView
+                style="@style/usertext"
+                android:text="位置提醒" />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

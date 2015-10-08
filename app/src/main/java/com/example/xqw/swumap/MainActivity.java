@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.DialogPreference;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -46,11 +49,20 @@ public class MainActivity extends Activity {
     BDLocation myLocation=null;
     MapStatus ms=null;
     MapStatusUpdate u=null;
+    SharedPreferences sharedPreferences;
+    UiSettings mUiSettings;
+    PowerManager powerManager = null;
+    PowerManager.WakeLock wakeLock = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());//SDK初始化，建议放置于Application类中完成
         setContentView(R.layout.activity_main);
+        //创建设置sharedpreferences,保存设置内容
+        sharedPreferences=getSharedPreferences("setting", MODE_PRIVATE);
+        //屏幕常亮设置
+        powerManager = (PowerManager)this.getSystemService(this.POWER_SERVICE);
+        wakeLock = this.powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Lock");
         requestLocButton = (ImageButton) findViewById(R.id.locButton);
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;//定位模式默认为普通
         //创建监听器，实现通过按钮切换定位模式
@@ -93,6 +105,7 @@ public class MainActivity extends Activity {
         ms=new MapStatus.Builder(baiduMap.getMapStatus()).zoom(17).build();
         u = MapStatusUpdateFactory.newMapStatus(ms);
         baiduMap.animateMapStatus(u);
+        initUISetting();//初始化UI设置
         mLocationClient = new LocationClient(getApplicationContext());//声明LocationClient类
         mLocationClient.registerLocationListener(myListener);  //注册LocationClient的监听事件
         LocationClientOption option = new LocationClientOption();//创建定位配置
@@ -121,7 +134,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                        switch (group.getCheckedRadioButtonId()){
+                        switch (group.getCheckedRadioButtonId()) {
                             case R.id.map_plain:
                                 baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
                                 ms = new MapStatus.Builder(baiduMap.getMapStatus()).overlook(0).build();
@@ -168,6 +181,20 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+        FloatingActionButton Mine=(FloatingActionButton)findViewById(R.id.action_setting);
+        Mine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,OtherActivity.class);
+                intent.putExtra("fragment_tag",OtherActivity.SETTING);
+                startActivity(intent);
+            }
+        });
+    }
+    private void initUISetting(){
+        mUiSettings=baiduMap.getUiSettings();
+        mUiSettings.setRotateGesturesEnabled(sharedPreferences.getBoolean("romate",true));
+        mUiSettings.setOverlookingGesturesEnabled(sharedPreferences.getBoolean("overlook",true));
     }
 
     @Override
@@ -184,14 +211,20 @@ public class MainActivity extends Activity {
     protected void onResume() {
         mMapView.onResume();
         super.onResume();
-
+        //判断屏幕是否设置常亮
+        if(sharedPreferences.getBoolean("screenlight",false)){
+            wakeLock.acquire();
+        }
+        initUISetting();
     }
 
     @Override
     protected void onPause() {
         mMapView.onPause();
         super.onPause();
-
+        if(sharedPreferences.getBoolean("screenlight",false)){
+            wakeLock.release();
+        }
     }
 
     @Override

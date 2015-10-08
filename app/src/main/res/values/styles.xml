@@ -8,5 +8,68 @@
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     <!-- Customize your theme here. -->
 </style>
+    <!-- 最外层样式 -->
+    2     <style name="wrap_layout">
+    3         <item name="android:orientation">vertical</item>
+    4         <item name="android:layout_height">wrap_content</item>
+    5         <item name="android:layout_width">match_parent</item>
+    6         <item name="android:layout_marginLeft">8dp</item>
+    7         <item name="android:layout_marginRight">8dp</item>
+    8         <item name="android:layout_marginTop">8dp</item>
+    9         <item name="android:padding">1px</item>
+    10         <item name="android:background">@drawable/bg_layout_shape</item>
+    11
+    12     </style>
+    13
+    14     <!-- 共用层样式 -->
+    15     <style name="base_layout">
+    16         <item name="android:orientation">horizontal</item>
+    17          <item name="android:layout_width">match_parent</item>
+    18          <item name="android:layout_height">wrap_content</item>
+    19          <item name="android:paddingTop">16dp</item>
+    20          <item name="android:paddingBottom">16dp</item>
+    21          <item name="android:paddingLeft">12dp</item>
+    22          <item name="android:paddingRight">12dp</item>
+    23         <item name="android:gravity">center_vertical</item>
+    24          <item name="android:focusable">true</item>
+    25         <item name="android:clickable">true</item>
+    26     </style>
+    <style name="usertext">
+                 <item name="android:textSize">16dp</item>
+                 <item name="android:textColor">@color/half_black</item>
+                 <item name="android:layout_width">wrap_content</item>
+                 <item name="android:layout_height">wrap_content</item>
+                <item name="android:layout_weight">1</item>
+            </style>
+    <style name="bg_line">
+                 <item name="android:layout_width">match_parent</item>
+                 <item name="android:layout_height">1px</item>
+                 <item name="android:background">@color/background</item>
+             </style>
+    <!-- 上圆角样式 -->
+    2     <style name="top_layout" parent="base_layout">
+    3         <item name="android:background">@drawable/top_layout_selector</item>
+    4     </style>
+    5
+    6
+    7     <!--无圆角样式  -->
+    8     <style name="mid_layout" parent="base_layout">
+    9          <item name="android:background">@drawable/mid_layout_selector</item>
+    10     </style>
+    11
+    12         <!-- 下圆角样式 -->
+    13     <style name="bottom_layout"  parent="base_layout">
+    14           <item name="android:background">@drawable/bottom_layout_selector</item>
+    15     </style>
+    16
+    17     <!-- 全圆角样式 -->
+    18     <style name="single_layout" parent="base_layout">
+    19         <item name="android:background">@drawable/single_layout_selector</item>
+    20     </style>
+    <style name="img_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/setting_arrow</item>
 
+    </style>
 </resources>
