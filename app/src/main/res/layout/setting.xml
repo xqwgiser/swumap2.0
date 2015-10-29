@@ -70,7 +70,11 @@
             <TextView
                 style="@style/usertext"
                 android:text="热力图" />
-            <ImageView style="@style/img_arrow"/>
+            <Switch
+                android:id="@+id/heatmap_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"/>
         </LinearLayout>
         <View style="@style/bg_line"/>
         <LinearLayout
@@ -79,6 +83,16 @@
             <TextView
                 style="@style/usertext"
                 android:text="位置提醒" />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/wrap_layout">
+        <LinearLayout
+            style="@style/single_layout"
+            android:id="@+id/about">
+            <TextView
+                style="@style/usertext"
+                android:text="关于"/>
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
     </LinearLayout>

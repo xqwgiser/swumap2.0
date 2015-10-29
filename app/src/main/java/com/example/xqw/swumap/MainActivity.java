@@ -1,18 +1,13 @@
 package com.example.xqw.swumap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.preference.DialogPreference;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
@@ -33,7 +28,6 @@ import com.baidu.mapapi.model.LatLng;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.OnItemClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
 public class MainActivity extends Activity {
@@ -185,16 +179,19 @@ public class MainActivity extends Activity {
         Mine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,OtherActivity.class);
-                intent.putExtra("fragment_tag",OtherActivity.SETTING);
+                Intent intent = new Intent(MainActivity.this, OtherActivity.class);
+                intent.putExtra("fragment_tag", OtherActivity.SETTING);
                 startActivity(intent);
             }
         });
+
     }
     private void initUISetting(){
         mUiSettings=baiduMap.getUiSettings();
         mUiSettings.setRotateGesturesEnabled(sharedPreferences.getBoolean("romate",true));
         mUiSettings.setOverlookingGesturesEnabled(sharedPreferences.getBoolean("overlook",true));
+        //是否开启热力图
+        baiduMap.setBaiduHeatMapEnabled(sharedPreferences.getBoolean("heatmap",false));
     }
 
     @Override

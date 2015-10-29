@@ -1,6 +1,7 @@
 package com.example.xqw.swumap;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,7 +28,9 @@ public class Setting extends Fragment implements View.OnClickListener,CompoundBu
     LinearLayout overlook;
     Switch overlookBtn;
     LinearLayout heatMap;
+    Switch heatMapBtn;
     LinearLayout positionRemind;
+    LinearLayout about;
     SharedPreferences sharedPreferences;
     @Nullable
     @Override
@@ -41,7 +44,9 @@ public class Setting extends Fragment implements View.OnClickListener,CompoundBu
         overlook=(LinearLayout)view.findViewById(R.id.overlook);
         overlookBtn=(Switch)view.findViewById(R.id.overlook_btn);
         heatMap=(LinearLayout)view.findViewById(R.id.heat_map);
+        heatMapBtn=(Switch)view.findViewById(R.id.heatmap_btn);
         positionRemind=(LinearLayout)view.findViewById(R.id.position_remind);
+        about=(LinearLayout)view.findViewById(R.id.about);
         return view;
     }
 
@@ -54,13 +59,16 @@ public class Setting extends Fragment implements View.OnClickListener,CompoundBu
         overlook.setOnClickListener(this);
         heatMap.setOnClickListener(this);
         positionRemind.setOnClickListener(this);
+        about.setOnClickListener(this);
         screenLightBtn.setOnCheckedChangeListener(this);
         romateBtn.setOnCheckedChangeListener(this);
         overlookBtn.setOnCheckedChangeListener(this);
+        heatMapBtn.setOnCheckedChangeListener(this);
         sharedPreferences=getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
         screenLightBtn.setChecked(sharedPreferences.getBoolean("screenlight",false));
         romateBtn.setChecked(sharedPreferences.getBoolean("romate",true));
         overlookBtn.setChecked(sharedPreferences.getBoolean("overlook",true));
+        heatMapBtn.setChecked(sharedPreferences.getBoolean("heatmap",false));
     }
 
     @Override
@@ -80,9 +88,18 @@ public class Setting extends Fragment implements View.OnClickListener,CompoundBu
                 Toast.makeText(getActivity(),"双指下滑切换3d视图",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.heat_map:
+//                Intent intentHeatmap=new Intent(getActivity(),MainActivity.class);
+//                intentHeatmap.putExtra("heat_map",true);
+//                startActivity(intentHeatmap);
+                Toast.makeText(getActivity(),"打开热力图显示人流集中区域",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.position_remind:
+                Toast.makeText(getActivity(),"暂不支持使用",Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.about:
+                FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.id_content,new About(),"about");
+                fragmentTransaction.commit();
         }
     }
 
@@ -102,9 +119,13 @@ public class Setting extends Fragment implements View.OnClickListener,CompoundBu
                 editor.putBoolean("overlook",isChecked);
                 editor.commit();
                 break;
+            case R.id.heatmap_btn:
+                editor.putBoolean("heatmap",isChecked);
+                editor.commit();
 
 
         }
 
     }
+
 }

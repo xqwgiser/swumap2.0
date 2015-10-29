@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">swumap</string>
+    <string name="app_name">西大地图</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="statement">本软件仅供学习交流之用，版权归原开发者所有，代码公开，可查看，修改，完善该软件，但不得用于商业用途，开源地址:https://github.com/xqwgiser/swumap2.0.git,感谢使用。</string>
 </resources>
